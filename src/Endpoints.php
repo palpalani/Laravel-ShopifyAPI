@@ -269,7 +269,7 @@ class Endpoints
      * Get the uri endpoint to be passed to the Shopify object
      *
      * @param $name Method name. eg. "getProductAll"
-     * @param  null  $parseArgs. optional, eg. product id, image id...
+     * @param  array|null  $parseArgs. optional, eg. product id, image id...
      * @return string
      */
     public function __call($name, $parseArgs = null)
@@ -293,7 +293,7 @@ class Endpoints
          * Set the tier1 endpoints properties
          * eg. $this->get->product;
          */
-        if (count($parseArgs) != 0) {
+        if ((is_countable($parseArgs) ? count($parseArgs) : 0) > 0) {
             $this->setTierOneEndpoints($this->categoryKey, $parseArgs[0]);
         } else {
             $this->setTierOneEndpoints($this->categoryKey);
@@ -303,7 +303,6 @@ class Endpoints
 
         /*
          * Get the tier 2 endpoint uri, if tier2 is requested.
-         *
          */
         if (! array_key_exists($endpointKey, $tierOneEndpoints)) {
             $tierTwoKey = array_values(

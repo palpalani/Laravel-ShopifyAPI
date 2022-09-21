@@ -104,7 +104,7 @@ class Shopify implements ShopifyContract
      *
      * @param  string  $endpoint
      * @param  optional  $params
-     * @return API response in JSON
+     * @return mixed
      */
     public function get($endpoint, $params = null)
     {
@@ -115,7 +115,7 @@ class Shopify implements ShopifyContract
      * Remove a specific item from the database.
      *
      * @param $endpoint
-     * @return mixed, API response in JSON
+     * @return mixed
      */
     public function delete($endpoint, $params = null)
     {
@@ -125,7 +125,7 @@ class Shopify implements ShopifyContract
     /**
      * @param $endpoint
      * @param $options
-     * @return mixed, API response in JSON
+     * @return mixed
      */
     public function modify($endpoint, $options, $params = null)
     {
@@ -137,7 +137,7 @@ class Shopify implements ShopifyContract
      *
      * @param $endpoint
      * @param $options
-     * @return, API response in JSON
+     * @return
      */
     public function create($endpoint, $options, $params = null)
     {
@@ -209,7 +209,7 @@ class Shopify implements ShopifyContract
      *  Build the URL for the specific API request
      *
      * @param  string  $endpoint
-     * @param  optional  $params
+     * @param  array|null  $params
      * @return string
      *
      * @throws Exception
