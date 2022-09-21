@@ -1,4 +1,5 @@
 <?php
+
 namespace BNMetrics\Shopify\Billing;
 
 use BNMetrics\Shopify\Contracts\Billing;
@@ -14,8 +15,8 @@ class ApplicationCharge extends AbstractBilling implements Billing
      *
      * @return string
      */
-    protected function getChargeEndpoint ()
+    protected function getChargeEndpoint()
     {
-        return $this->requestPath . 'application_charges';
+        return $this->requestPath.'application_charges';
     }
 }

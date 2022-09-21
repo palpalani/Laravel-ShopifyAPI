@@ -2,15 +2,14 @@
 
 namespace BNMetrics\Shopify;
 
+use BNMetrics\Shopify\Contracts\ShopifyContract;
+use BNMetrics\Shopify\Traits\ResponseOptions;
 use Exception;
 use GuzzleHttp\Client;
 use InvalidArgumentException;
-use BNMetrics\Shopify\Traits\ResponseOptions;
-use BNMetrics\Shopify\Contracts\ShopifyContract;
 
 class Shopify implements ShopifyContract
 {
-
     use ResponseOptions;
 
     protected $user;
@@ -23,10 +22,10 @@ class Shopify implements ShopifyContract
 
     protected $httpClient;
 
-
     /**
      * Shopify constructor.
-     * @param Object ShopifyAuth $shopifyAuth
+     *
+     * @param object ShopifyAuth $shopifyAuth
      */
     public function __construct(ShopifyAuth $shopifyAuth)
     {
@@ -36,27 +35,24 @@ class Shopify implements ShopifyContract
     /**
      * Set the shop Url and request Path, for the first time installation
      *
-     * @param String $shopURL
-     * @param Array $scope
-     *
+     * @param  string  $shopURL
+     * @param  array  $scope
      * @return $this
      */
     public function make($shopURL, array $scope)
     {
-
         $allScope = $this->getAllScopes();
 
-        if (!array_intersect( $allScope, $scope ) == $scope) {
-            throw New InvalidArgumentException( 'invalid Scope' );
+        if (! array_intersect($allScope, $scope) == $scope) {
+            throw new InvalidArgumentException('invalid Scope');
         }
 
-        $this->apiCall = $this->shopifyAuth->stateless()->setShopURL( $shopURL )->scopes( $scope );
+        $this->apiCall = $this->shopifyAuth->stateless()->setShopURL($shopURL)->scopes($scope);
 
         $this->requestPath = $this->shopifyAuth->requestPath();
 
         return $this;
     }
-
 
     /**
      * Alternative to make()
@@ -70,7 +66,7 @@ class Shopify implements ShopifyContract
      */
     public function retrieve($shopURL, $token)
     {
-        $this->apiCall = $this->shopifyAuth->stateless()->setShopURL( $shopURL );
+        $this->apiCall = $this->shopifyAuth->stateless()->setShopURL($shopURL);
 
         $this->requestPath = $this->shopifyAuth->requestPath();
 
@@ -92,29 +88,28 @@ class Shopify implements ShopifyContract
     /**
      * get user object, auth() has to be called first
      *
-     * @return Object
+     * @return object
      */
     public function getUser()
     {
-        if($this->user != null) return $this->user;
-        else throw new Exception("Must authenticate first!");
+        if ($this->user != null) {
+            return $this->user;
+        } else {
+            throw new Exception('Must authenticate first!');
+        }
     }
-
 
     /**
      * Get the response from Shopify API Call
      *
-     * @param string $endpoint
-     * @param optional $params
+     * @param  string  $endpoint
+     * @param  optional  $params
      * @return API response in JSON
-     *
      */
     public function get($endpoint, $params = null)
     {
-
         return $this->APICallWithoutOptions('get', $endpoint, $params);
     }
-
 
     /**
      * Remove a specific item from the database.
@@ -127,19 +122,15 @@ class Shopify implements ShopifyContract
         return $this->APICallWithoutOptions('delete', $endpoint, $params);
     }
 
-
     /**
-     *
-     *
      * @param $endpoint
      * @param $options
      * @return mixed, API response in JSON
      */
     public function modify($endpoint, $options, $params = null)
     {
-        return $this->APICallWithOptions('put',$endpoint, $options, $params);
+        return $this->APICallWithOptions('put', $endpoint, $options, $params);
     }
-
 
     /**
      * Create an item
@@ -150,31 +141,28 @@ class Shopify implements ShopifyContract
      */
     public function create($endpoint, $options, $params = null)
     {
-        return $this->APICallWithOptions('post',$endpoint, $options, $params);
+        return $this->APICallWithOptions('post', $endpoint, $options, $params);
     }
 
-
     /**
-     *
      * API call function for endpoints requires no request body to be passed
      * $params is optional for specific GET request
      *
      * @param $requestType
      * @param $endpoint
-     * @param null $params
+     * @param  null  $params
      * @return mixed
      */
     protected function APICallWithoutOptions($requestType, $endpoint, $params = null)
     {
         $response = $this->getHttpClient()->{$requestType}($this->buildRequestUrl($endpoint, $params),
             [
-                'headers' => $this->getResponseHeaders($this->user->token)
+                'headers' => $this->getResponseHeaders($this->user->token),
             ]);
 
         $return = json_decode($response->getBody(), true);
 
         return $return;
-
     }
 
     /**
@@ -186,51 +174,53 @@ class Shopify implements ShopifyContract
      * @param $options
      * @return mixed
      */
-    protected function APICallWithOptions($requestType, $endpoint, $options,  $params = null)
+    protected function APICallWithOptions($requestType, $endpoint, $options, $params = null)
     {
         $postkey = $this->httpClientVersionCheck();
-
 
         $response = $this->getHttpClient()->{$requestType}($this->buildRequestUrl($endpoint, $params), [
 
             'headers' => $this->getResponseHeaders($this->user->token),
-            $postkey =>  $options
+            $postkey => $options,
 
         ]);
 
         $return = json_decode($response->getBody(), true);
 
         return $return;
-
     }
 
     /**
      * Get the request url parameters
      *
-     * @param array|null $params
+     * @param  array|null  $params
      * @return null|string
      */
     protected function getParams(array $params = null)
     {
-        if ($params == null) return null;
-        return '?' . http_build_query( $params, '', '&' );
-    }
+        if ($params == null) {
+            return null;
+        }
 
+        return '?'.http_build_query($params, '', '&');
+    }
 
     /**
      *  Build the URL for the specific API request
      *
-     * @param string $endpoint
-     * @param optional $params
+     * @param  string  $endpoint
+     * @param  optional  $params
      * @return string
+     *
      * @throws Exception
      */
     protected function buildRequestUrl($endpoint, $params = null)
     {
-        if($this->user == null)
-            throw new Exception("Please authenticate user first!");
+        if ($this->user == null) {
+            throw new Exception('Please authenticate user first!');
+        }
 
-        $requestPath = $this->requestPath . $endpoint . ".json". $this->getParams( $params );
+        $requestPath = $this->requestPath.$endpoint.'.json'.$this->getParams($params);
 
         return $requestPath;
     }
@@ -242,7 +232,7 @@ class Shopify implements ShopifyContract
      */
     protected function getAllScopes()
     {
-        return config( 'shopify.scopes' );
+        return config('shopify.scopes');
     }
 
     /**
@@ -290,14 +280,12 @@ class Shopify implements ShopifyContract
         return $this->requestPath;
     }
 
-
     /**
      * get the API result for the specific endpoints
      *
      * @param $name Method name. eg. "getProductAll"
-     * @param null $parseArgs. optional; ids, options, filter params.
+     * @param  null  $parseArgs. optional; ids, options, filter params.
      * @return mixed
-     *
      */
     public function __call($name, $args = null)
     {
@@ -306,7 +294,7 @@ class Shopify implements ShopifyContract
         $currAction = $endpoints->callbackAction($name);
 
         $parseArrs = array_values(
-            array_filter($args, function($e) {
+            array_filter($args, function ($e) {
                 return is_array($e) ? $e : null;
             })
         );
@@ -318,53 +306,61 @@ class Shopify implements ShopifyContract
          *
          */
         $parseArgsSerialized = array_diff(array_map('serialize', $args),
-            array_map('serialize',$parseArrs));
+            array_map('serialize', $parseArrs));
         $unserialized = array_map('unserialize', $parseArgsSerialized);
 
-
         $parseArgs = [];
-        foreach($unserialized as $items) {
-            if(is_integer($items)) $parseArgs[] = $items;
-            else $additionalUri = '/' . $items;
+        foreach ($unserialized as $items) {
+            if (is_int($items)) {
+                $parseArgs[] = $items;
+            } else {
+                $additionalUri = '/'.$items;
+            }
         }
 
-        if(isset($additionalUri)) $endpoint = $endpoints->$name(...$parseArgs) . $additionalUri;
-        else $endpoint = $endpoints->$name(...$parseArgs);
+        if (isset($additionalUri)) {
+            $endpoint = $endpoints->$name(...$parseArgs).$additionalUri;
+        } else {
+            $endpoint = $endpoints->$name(...$parseArgs);
+        }
 
         /*
          * set the options and params to be passed
          */
         $options = null;
         $params = null;
-        foreach($parseArrs as $arr)
-        {
-            if(array_keys($arr)[0] == $endpoints->categoryKey) $options = $arr;
-            else $params = $arr;
+        foreach ($parseArrs as $arr) {
+            if (array_keys($arr)[0] == $endpoints->categoryKey) {
+                $options = $arr;
+            } else {
+                $params = $arr;
+            }
         }
-
 
         // call get(), create(), modify() and delete() methods
-        if($currAction == 'create' && $currAction == 'modify')
-        {
-            if($options == null) throw new Exception('invalid option passed');
+        if ($currAction == 'create' && $currAction == 'modify') {
+            if ($options == null) {
+                throw new Exception('invalid option passed');
+            }
 
             return $this->{$currAction}($endpoint, $options);
+        } else {
+            return $this->{$currAction}($endpoint, $params);
         }
-        else return $this->{$currAction}($endpoint, $params);
     }
 
     /**
      * @return \BNMetrics\Shopify\ShopifyAuth
      */
-    public function getShopifyAuth(): \BNMetrics\Shopify\ShopifyAuth
+    public function getShopifyAuth(): ShopifyAuth
     {
         return $this->shopifyAuth;
     }
 
     /**
-     * @param \BNMetrics\Shopify\ShopifyAuth $shopifyAuth
+     * @param  \BNMetrics\Shopify\ShopifyAuth  $shopifyAuth
      */
-    public function setShopifyAuth(\BNMetrics\Shopify\ShopifyAuth $shopifyAuth): void
+    public function setShopifyAuth(ShopifyAuth $shopifyAuth): void
     {
         $this->shopifyAuth = $shopifyAuth;
     }

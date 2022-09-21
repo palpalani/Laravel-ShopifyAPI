@@ -4,8 +4,8 @@ namespace BNMetrics\Shopify;
 
 use BNMetrics\Shopify\Traits\ResponseOptions;
 use Illuminate\Http\Request;
-use Laravel\Socialite\Two\User;
 use Laravel\Socialite\Two\AbstractProvider;
+use Laravel\Socialite\Two\User;
 
 class ShopifyAuth extends AbstractProvider
 {
@@ -13,7 +13,7 @@ class ShopifyAuth extends AbstractProvider
 
     protected $shopURL;
 
-    protected $adminPath = "/admin/";
+    protected $adminPath = '/admin/';
 
     protected $requestPath;
 
@@ -23,7 +23,7 @@ class ShopifyAuth extends AbstractProvider
      * Set the myshopify domain URL for the API request.
      * eg. example.myshopify.com
      *
-     * @param Request $shopURL
+     * @param  Request  $shopURL
      * @return $this
      */
     public function setShopURL($shopURL)
@@ -40,8 +40,9 @@ class ShopifyAuth extends AbstractProvider
      */
     public function requestPath()
     {
-        if($this->shopURL != null)
-            $this->requestPath = 'https://' . $this->shopURL . $this->adminPath;
+        if ($this->shopURL != null) {
+            $this->requestPath = 'https://'.$this->shopURL.$this->adminPath;
+        }
 
         return $this->requestPath;
     }
@@ -49,14 +50,14 @@ class ShopifyAuth extends AbstractProvider
     /**
      * Get the authentication URL for the provider.
      *
-     * @param string $state
+     * @param  string  $state
      * @return string
      */
     protected function getAuthUrl($state)
     {
-        $url =  $this->requestPath()."oauth/authorize";
+        $url = $this->requestPath().'oauth/authorize';
 
-        return $this->buildAuthUrlFromBase( $url, $state );
+        return $this->buildAuthUrlFromBase($url, $state);
     }
 
     /**
@@ -67,24 +68,23 @@ class ShopifyAuth extends AbstractProvider
     protected function getTokenUrl()
     {
         // 'https://example.myshopify.com/admin/oauth/access_token'
-        return 'https://' . $this->shopURL . $this->adminPath . "oauth/access_token";
+        return 'https://'.$this->shopURL.$this->adminPath.'oauth/access_token';
     }
 
     /**
      * Get the raw user for the given access token.
      *
-     * @param  string $token
+     * @param  string  $token
      * @return array
      */
     protected function getUserByToken($token)
     {
-        $userUrl = 'https://' . $this->shopURL . $this->adminPath . "shop.json";
+        $userUrl = 'https://'.$this->shopURL.$this->adminPath.'shop.json';
 
-
-        $response = $this->getHttpClient()->get( $userUrl,
-                [
-                    'headers' => $this->getResponseHeaders($token)
-                ]);
+        $response = $this->getHttpClient()->get($userUrl,
+            [
+                'headers' => $this->getResponseHeaders($token),
+            ]);
 
         $user = json_decode($response->getBody(), true);
 
@@ -96,7 +96,7 @@ class ShopifyAuth extends AbstractProvider
     /**
      * Map the raw user array to a Socialite User instance.
      *
-     * @param  array $user
+     * @param  array  $user
      * @return \Laravel\Socialite\Two\User
      */
     protected function mapUserToObject(array $user)
@@ -106,7 +106,7 @@ class ShopifyAuth extends AbstractProvider
             'nickname' => $user['name'],
             'name' => $user['myshopify_domain'],
             'email' => $user['email'],
-            'avatar' => null
+            'avatar' => null,
         ]);
     }
 
@@ -120,9 +120,8 @@ class ShopifyAuth extends AbstractProvider
         $limit = $this->responseHeaders['X-Shopify-Shop-Api-Call-Limit'] ??
                  $this->responseHeaders['HTTP_X_SHOPIFY_SHOP_API_CALL_LIMIT'] ?? ['1/40'];
 
-        return (int)explode('/', $limit[0])[0];
+        return (int) explode('/', $limit[0])[0];
     }
-
 
     /**
      * this method is for when you need to make an embedded shopify app
@@ -137,5 +136,4 @@ class ShopifyAuth extends AbstractProvider
 
         return $authUrl;
     }
-
 }

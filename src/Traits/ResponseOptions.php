@@ -6,7 +6,6 @@ use GuzzleHttp\ClientInterface;
 
 trait ResponseOptions
 {
-
     /**
      * Get the response header of the API request
      *
@@ -17,7 +16,7 @@ trait ResponseOptions
     {
         return [
             'Accept' => 'application/json',
-            'X-Shopify-Access-Token' => $token ];
+            'X-Shopify-Access-Token' => $token, ];
     }
 
     /**

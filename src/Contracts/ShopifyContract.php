@@ -6,7 +6,7 @@ interface ShopifyContract
 {
     /**
      * @param $shopURL
-     * @param array $scope
+     * @param  array  $scope
      * @return mixed
      */
     public function make($shopURL, array $scope);
@@ -18,10 +18,8 @@ interface ShopifyContract
      */
     public function redirect();
 
-
     /**
      * @return $this with validated user info
-     *
      */
     public function auth();
 }

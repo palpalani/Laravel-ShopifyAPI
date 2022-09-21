@@ -2,8 +2,8 @@
 
 namespace BNMetrics\Shopify;
 
-use Illuminate\Support\ServiceProvider;
 use BNMetrics\Shopify\Contracts\ShopifyContract;
+use Illuminate\Support\ServiceProvider;
 
 class ShopifyServiceProvider extends ServiceProvider
 {
@@ -16,7 +16,7 @@ class ShopifyServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/shopify.php' => config_path('shopify.php')
+            __DIR__.'/config/shopify.php' => config_path('shopify.php'),
         ], 'shopify');
     }
 
@@ -27,15 +27,12 @@ class ShopifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->app->singleton(
-            ShopifyContract::class, function($app) {
+            ShopifyContract::class, function ($app) {
+                $shopifyAuth = new ShopifyAuth($app['request'], config('shopify.key'),
+                    config('shopify.secret'), config('shopify.redirectURL'));
 
-             $shopifyAuth = new ShopifyAuth($app['request'], config( 'shopify.key' ),
-                                config( 'shopify.secret' ), config( 'shopify.redirectURL' ));
-
-             return new Shopify($shopifyAuth);
-
-        });
+                return new Shopify($shopifyAuth);
+            });
     }
 }
