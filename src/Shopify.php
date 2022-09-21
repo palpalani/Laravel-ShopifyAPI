@@ -242,7 +242,7 @@ class Shopify implements ShopifyContract
      */
     public function getAuthUrl()
     {
-        $this->shopifyAuth->fetchAuthUrl();
+        return $this->shopifyAuth->fetchAuthUrl();
     }
 
     /**
