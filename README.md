@@ -1,28 +1,23 @@
 # Laravel Shopify API Wrapper
-[![Build Status](https://travis-ci.org/BNMetrics/Laravel-ShopifyAPI.svg?branch=master)](https://travis-ci.org/BNMetrics/Laravel-ShopifyAPI)
-[![Latest Stable Version](https://poser.pugx.org/bnmetrics/laravel-shopify-api/v/stable)](https://packagist.org/packages/bnmetrics/laravel-shopify-api)
 
-This Package provides a easy way for you to building [Shopify](https://www.shopify.com/?ref=developer-886210bf83bd9c41) Apps with Laravel 5. The OAuth authentication is extended upon Laravel's Socialite.
+[![Latest Stable Version](https://poser.pugx.org/bnmetrics/laravel-shopify-api/v/stable)](https://packagist.org/packages/bnmetrics/laravel-shopify-api)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/palpalani/Laravel-ShopifyAPI/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/palpalani/Laravel-ShopifyAPI/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Apatch-1)
+
+This Package provides a easy way for you to building [Shopify](https://www.shopify.com/) Apps with Laravel 8/9. The OAuth authentication is extended upon Laravel's Socialite.
 
 ### This package supports both public and private apps, including billing.
  
 ## Installation
 
-You can install this package via composer with:
+You can install this package via composer:
 
 ```bash
 composer require bnmetrics/laravel-shopify-api
 
 ```
-Or add to your Laravel project composer.json file:
 
-```json
-"require": {
+You can publish the config file with:
 
-    "bnmetrics/laravel-shopify-api" : "~1.0",
-}
-```
-To publish the shopify.php configuration file to `app/config` run:
 ```bash
 php artisan vendor:publish --provider='BNMetrics\Shopify\ShopifyServiceProvider'
 ```
@@ -30,6 +25,7 @@ php artisan vendor:publish --provider='BNMetrics\Shopify\ShopifyServiceProvider'
 ## Configuration
 
 Set shopify environment variables your .env file:
+
 ```env
 SHOPIFY_KEY=YOUR_API_KEY_HERE
 SHOPIFY_SECRET=YOUR_API_SECRET_HERE
@@ -238,6 +234,7 @@ For usage charges, as it is based uppon an existing recurring charge, an activat
 The recurring charge also require to have 'capped_amount' and 'terms'.
 
 We can modify our activate() method in our controller like so:
+
 ```php
 public function activated(Request $request)
 {
@@ -253,7 +250,29 @@ public function activated(Request $request)
 
 }
 ```
+## Testing
 
+```bash
+composer test
+```
 
+## Changelog
 
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## Security Vulnerabilities
+
+Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+
+## Credits
+
+- [palPalani](https://github.com/palpalani)
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
