@@ -284,7 +284,7 @@ class Shopify implements ShopifyContract
      * get the API result for the specific endpoints
      *
      * @param $name Method name. eg. "getProductAll"
-     * @param  null  $parseArgs. optional; ids, options, filter params.
+     * @param  array|null  $args. optional; ids, options, filter params.
      * @return mixed
      */
     public function __call($name, $args = null)
