@@ -9,7 +9,6 @@ trait ResponseOptions
     /**
      * Get the response header of the API request
      *
-     * @param $token
      * @return array
      */
     protected function getResponseHeaders($token)

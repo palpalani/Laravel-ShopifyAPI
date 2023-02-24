@@ -8,7 +8,6 @@ interface Billing
      * Create a Charge
      *
      * @param  object  $authorized instanceof Shopify || User
-     * @param  array  $options
      * @return $this
      *
      * @throws Exception

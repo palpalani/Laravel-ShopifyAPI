@@ -96,7 +96,6 @@ class ShopifyAuth extends AbstractProvider
     /**
      * Map the raw user array to a Socialite User instance.
      *
-     * @param  array  $user
      * @return \Laravel\Socialite\Two\User
      */
     protected function mapUserToObject(array $user)
@@ -112,8 +111,6 @@ class ShopifyAuth extends AbstractProvider
 
     /**
      * Return current shopify api limit - 1 is lower
-     *
-     * @return int
      */
     public function checkCurrentApiLimit(): int
     {

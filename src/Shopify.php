@@ -36,7 +36,6 @@ class Shopify implements ShopifyContract
      * Set the shop Url and request Path, for the first time installation
      *
      * @param  string  $shopURL
-     * @param  array  $scope
      * @return $this
      */
     public function make($shopURL, array $scope)
@@ -60,8 +59,6 @@ class Shopify implements ShopifyContract
      *
      * Method chain starts either as Shopify::make() or Shopify::retrieve()
      *
-     * @param $shopURL
-     * @param $token
      * @return $this
      */
     public function retrieve($shopURL, $token)
@@ -114,7 +111,6 @@ class Shopify implements ShopifyContract
     /**
      * Remove a specific item from the database.
      *
-     * @param $endpoint
      * @return mixed
      */
     public function delete($endpoint, $params = null)
@@ -123,8 +119,6 @@ class Shopify implements ShopifyContract
     }
 
     /**
-     * @param $endpoint
-     * @param $options
      * @return mixed
      */
     public function modify($endpoint, $options, $params = null)
@@ -134,10 +128,6 @@ class Shopify implements ShopifyContract
 
     /**
      * Create an item
-     *
-     * @param $endpoint
-     * @param $options
-     * @return
      */
     public function create($endpoint, $options, $params = null)
     {
@@ -148,8 +138,6 @@ class Shopify implements ShopifyContract
      * API call function for endpoints requires no request body to be passed
      * $params is optional for specific GET request
      *
-     * @param $requestType
-     * @param $endpoint
      * @param  null  $params
      * @return mixed
      */
@@ -169,9 +157,6 @@ class Shopify implements ShopifyContract
      * API call function for endpoints that require request body
      *
      *
-     * @param $requestType
-     * @param $endpoint
-     * @param $options
      * @return mixed
      */
     protected function APICallWithOptions($requestType, $endpoint, $options, $params = null)
@@ -193,7 +178,6 @@ class Shopify implements ShopifyContract
     /**
      * Get the request url parameters
      *
-     * @param  array|null  $params
      * @return null|string
      */
     protected function getParams(array $params = null)

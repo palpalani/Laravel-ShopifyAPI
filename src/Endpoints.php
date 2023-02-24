@@ -37,7 +37,6 @@ class Endpoints
      * eg. /products.json, /products/{id}
      *
      * @param $name String. eg. 'product'
-     * @param $id
      * @return $this
      */
     public function setTierOneEndpoints($name, $id = null)
@@ -121,8 +120,6 @@ class Endpoints
      * This method is specifically for endpoints with tier 3 available. 'getOrdersFullfillmentsEvents'
      * eg. fullfilmentEvents to ['fulfillments', 'events']
      *
-     * @param $combinedKey
-     * @param $endpointArr
      * @return array
      */
     protected function getTierKeys($combinedKey, $endpointArr)
@@ -148,7 +145,6 @@ class Endpoints
      * Get the request uri piece from the name,
      * eg. $name = 'smartCollections',return 'smart_collections'
      *
-     * @param $name
      * @return string
      */
     protected function getUriFromKey($name)
@@ -166,8 +162,6 @@ class Endpoints
     /**
      * Set the API endpoints given name, endpoint uri, and id
      *
-     * @param $name
-     * @param $uri
      * @param  null  $id optional
      */
     protected function setEndpoints($name, $uri, $id = null)
@@ -206,7 +200,6 @@ class Endpoints
      *
      * eg. $name = 'productsAll', would return [ 'products' => ['images', 'variant'] ]
      *
-     * @param $name
      * @return array|null
      */
     public function findEndpoint($name)
@@ -239,7 +232,6 @@ class Endpoints
      *
      * eg. productImagesById to productImages
      *
-     * @param $name
      * @return mixed
      */
     protected function removeSuffix($name)
@@ -252,8 +244,6 @@ class Endpoints
     /**
      * Remove part of the given string that's the same to an element in the given array.
      *
-     * @param $name
-     * @param $inputArr
      * @return mixed
      */
     protected function getString($name, $inputArr)
