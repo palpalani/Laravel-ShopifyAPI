@@ -14,9 +14,7 @@ class BillingServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-    }
+    public function boot() {}
 
     /**
      * Register Shopify service.

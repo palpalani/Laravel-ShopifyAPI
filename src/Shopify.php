@@ -180,7 +180,7 @@ class Shopify implements ShopifyContract
      *
      * @return null|string
      */
-    protected function getParams(array $params = null)
+    protected function getParams(?array $params = null)
     {
         if ($params == null) {
             return null;
@@ -237,7 +237,7 @@ class Shopify implements ShopifyContract
     protected function getHttpClient()
     {
         if (is_null($this->httpClient)) {
-            $this->httpClient = new Client();
+            $this->httpClient = new Client;
         }
 
         return $this->httpClient;
@@ -267,8 +267,8 @@ class Shopify implements ShopifyContract
     /**
      * get the API result for the specific endpoints
      *
-     * @param $name Method name. eg. "getProductAll"
-     * @param  array|null  $args. optional; ids, options, filter params.
+     * @param  $name  Method name. eg. "getProductAll"
+     * @param  array|null  $args.  optional; ids, options, filter params.
      * @return mixed
      */
     public function __call($name, $args = null)
@@ -333,17 +333,11 @@ class Shopify implements ShopifyContract
         }
     }
 
-    /**
-     * @return \BNMetrics\Shopify\ShopifyAuth
-     */
     public function getShopifyAuth(): ShopifyAuth
     {
         return $this->shopifyAuth;
     }
 
-    /**
-     * @param  \BNMetrics\Shopify\ShopifyAuth  $shopifyAuth
-     */
     public function setShopifyAuth(ShopifyAuth $shopifyAuth): void
     {
         $this->shopifyAuth = $shopifyAuth;

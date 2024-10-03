@@ -23,9 +23,9 @@ class RecurringBilling extends AbstractBilling implements Billing
     /**
      * delete a specific charge
      *
-     * @param  string  $myshopify myshopify domain
-     * @param  string  $token access_token
-     * @param  string  $id chargeID
+     * @param  string  $myshopify  myshopify domain
+     * @param  string  $token  access_token
+     * @param  string  $id  chargeID
      * @return void
      */
     public function delete($myshopify, $token, $id)

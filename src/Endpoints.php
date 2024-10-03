@@ -24,10 +24,10 @@ class Endpoints
 
     public function __construct()
     {
-        $this->get = new \stdClass();
-        $this->create = new \stdClass();
-        $this->modify = new \stdClass();
-        $this->delete = new \stdClass();
+        $this->get = new \stdClass;
+        $this->create = new \stdClass;
+        $this->modify = new \stdClass;
+        $this->delete = new \stdClass;
 
         $this->endpoints = config('shopify.endpoints');
     }
@@ -36,7 +36,7 @@ class Endpoints
      * Set the endpoints uris for the first level endpoints,
      * eg. /products.json, /products/{id}
      *
-     * @param $name String. eg. 'product'
+     * @param  $name  String. eg. 'product'
      * @return $this
      */
     public function setTierOneEndpoints($name, $id = null)
@@ -55,7 +55,7 @@ class Endpoints
      * eg. product/{id}/images, product/{id}/images/count,
      *     product/{id}/images/{id}
      *
-     * @param $name string, eg. 'productImages'
+     * @param  $name  string, eg. 'productImages'
      * @param  null  $id
      * @return $this
      *
@@ -75,7 +75,7 @@ class Endpoints
         //Get the tier1 Uri of the current endpoint
         try {
             $tierOneUri = $this->get->{$tierOneKey}[$tierOneKey.'ById'];
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception(' Must define tier one endpoint!');
         }
 
@@ -162,7 +162,7 @@ class Endpoints
     /**
      * Set the API endpoints given name, endpoint uri, and id
      *
-     * @param  null  $id optional
+     * @param  null  $id  optional
      */
     protected function setEndpoints($name, $uri, $id = null)
     {
@@ -219,7 +219,7 @@ class Endpoints
     /**
      * get the current action of the APIcall
      *
-     * @param $name string, eg. 'getProductAll'
+     * @param  $name  string, eg. 'getProductAll'
      * @return mixed string, eg. 'get'
      */
     public function callbackAction($name)
@@ -258,8 +258,8 @@ class Endpoints
     /**
      * Get the uri endpoint to be passed to the Shopify object
      *
-     * @param $name Method name. eg. "getProductAll"
-     * @param  array|null  $parseArgs. optional, eg. product id, image id...
+     * @param  $name  Method name. eg. "getProductAll"
+     * @param  array|null  $parseArgs.  optional, eg. product id, image id...
      * @return string
      */
     public function __call($name, $parseArgs = null)

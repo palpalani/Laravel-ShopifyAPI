@@ -37,7 +37,7 @@ abstract class AbstractBilling implements Billing
     /**
      * Create a Charge
      *
-     * @param  object  $authorized instanceof Shopify || User
+     * @param  object  $authorized  instanceof Shopify || User
      * @return $this
      *
      * @throws Exception
@@ -109,9 +109,9 @@ abstract class AbstractBilling implements Billing
     /**
      * retrieve a specific charge by id, myshopify domain and access token
      *
-     * @param  string  $myshopify myshopify domain
-     * @param  string  $token access_token
-     * @param  string  $id chargeID
+     * @param  string  $myshopify  myshopify domain
+     * @param  string  $token  access_token
+     * @param  string  $id  chargeID
      * @return mixed
      */
     public function getChargeById($myshopify, $token, $id)
@@ -131,8 +131,8 @@ abstract class AbstractBilling implements Billing
     /**
      * Get all the charges from a specific shop
      *
-     * @param  string  $myshopify myshopify domain, eg. 'example.myshopify.com'
-     * @param  string  $token, access_token
+     * @param  string  $myshopify  myshopify domain, eg. 'example.myshopify.com'
+     * @param  string  $token,  access_token
      * @return mixed
      */
     public function getAllCharges($myshopify, $token, $sinceId = null)
@@ -156,8 +156,8 @@ abstract class AbstractBilling implements Billing
     /**
      * Activate a specific charge
      *
-     * @param  string  $myshopify myshopify domain
-     * @param  string  $token access token
+     * @param  string  $myshopify  myshopify domain
+     * @param  string  $token  access token
      * @param  string  $id  charge id
      * @return mixed
      */
@@ -203,7 +203,7 @@ abstract class AbstractBilling implements Billing
     protected function getHttpClient()
     {
         if (is_null($this->httpClient)) {
-            $this->httpClient = new Client();
+            $this->httpClient = new Client;
         }
 
         return $this->httpClient;

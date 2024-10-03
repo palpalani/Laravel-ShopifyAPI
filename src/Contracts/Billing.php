@@ -7,7 +7,7 @@ interface Billing
     /**
      * Create a Charge
      *
-     * @param  object  $authorized instanceof Shopify || User
+     * @param  object  $authorized  instanceof Shopify || User
      * @return $this
      *
      * @throws Exception
