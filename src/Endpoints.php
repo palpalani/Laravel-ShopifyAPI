@@ -65,21 +65,21 @@ class Endpoints
     {
         $endpointArr = $this->findEndpoint($name);
 
-        //check validation of input endpoint
+        // check validation of input endpoint
         if (empty($endpointArr)) {
             throw new \Exception('Invalid endpoint or this endpoint does not have tier 2.');
         }
 
         $tierOneKey = array_keys($endpointArr)[0];
 
-        //Get the tier1 Uri of the current endpoint
+        // Get the tier1 Uri of the current endpoint
         try {
             $tierOneUri = $this->get->{$tierOneKey}[$tierOneKey.'ById'];
         } catch (\Exception $e) {
             throw new \Exception(' Must define tier one endpoint!');
         }
 
-        //Get the tier 2 key
+        // Get the tier 2 key
         $tierTwoKey = lcfirst(str_replace($tierOneKey, '', $name));
 
         if (! in_array($tierTwoKey, $this->endpoints[$tierOneKey])) {
@@ -94,12 +94,12 @@ class Endpoints
 
         $tierTwoEndpoint = $this->getUriFromKey($tierTwoKey);
 
-        //if tierthreekey isset, $name = str_replace() get rid of t3key
+        // if tierthreekey isset, $name = str_replace() get rid of t3key
         $tierTwoUri = $tierOneUri.'/'.$tierTwoEndpoint;
 
         if (isset($tierThreeKey) && isset($id)) {
             $tierTwoName = str_replace(ucfirst($tierThreeKey), '', $name);
-            //Set Tier2 endpoints
+            // Set Tier2 endpoints
             $this->setEndpoints($tierTwoName, $tierTwoUri, $id);
 
             $tierTwoEnd = $this->get->{$tierTwoName}[$tierTwoName.'ById'];
