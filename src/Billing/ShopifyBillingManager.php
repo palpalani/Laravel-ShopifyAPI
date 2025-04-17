@@ -2,17 +2,16 @@
 
 namespace BNMetrics\Shopify\Billing;
 
-use InvalidArgumentException;
-use Illuminate\Support\Manager;
 use BNMetrics\Shopify\Contracts\BillingFactory;
+use Illuminate\Support\Manager;
+use InvalidArgumentException;
 
 class ShopifyBillingManager extends Manager implements BillingFactory
 {
-
     /**
      * Get a driver instance for the shopify billing type
      *
-     * @param string $driver
+     * @param  string  $driver
      * @return mixed
      */
     public function with($driver)
@@ -50,13 +49,12 @@ class ShopifyBillingManager extends Manager implements BillingFactory
         return new UsageCharge;
     }
 
-
     /**
      * Get the default driver name.
      *
      * @return string
      */
-    public function getDefaultDriver ()
+    public function getDefaultDriver()
     {
         throw new InvalidArgumentException('No billing driver was specified.');
     }

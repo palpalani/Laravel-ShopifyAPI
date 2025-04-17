@@ -2,23 +2,19 @@
 
 namespace BNMetrics\Shopify;
 
-use Illuminate\Support\ServiceProvider;
-use BNMetrics\Shopify\Contracts\BillingFactory;
 use BNMetrics\Shopify\Billing\ShopifyBillingManager;
+use BNMetrics\Shopify\Contracts\BillingFactory;
+use Illuminate\Support\ServiceProvider;
 
 class BillingServiceProvider extends ServiceProvider
 {
-
     /**
      * Bootstrap any application services.
      * publish the config file
      *
      * @return void
      */
-    public function boot()
-    {
-
-    }
+    public function boot() {}
 
     /**
      * Register Shopify service.
@@ -27,11 +23,10 @@ class BillingServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->app->singleton(
-            BillingFactory::class, function($app) {
+            BillingFactory::class, function ($app) {
                 return new ShopifyBillingManager($app);
-        });
+            });
     }
 
     /**

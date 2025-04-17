@@ -6,18 +6,16 @@ use GuzzleHttp\ClientInterface;
 
 trait ResponseOptions
 {
-
     /**
      * Get the response header of the API request
      *
-     * @param $token
      * @return array
      */
     protected function getResponseHeaders($token)
     {
         return [
             'Accept' => 'application/json',
-            'X-Shopify-Access-Token' => $token ];
+            'X-Shopify-Access-Token' => $token, ];
     }
 
     /**
@@ -27,7 +25,7 @@ trait ResponseOptions
      */
     protected function httpClientVersionCheck()
     {
-        $postKey = (version_compare(ClientInterface::VERSION, '6') === 1) ? 'json' : 'body';
+        $postKey = (version_compare(ClientInterface::MAJOR_VERSION, '6') >= 0) ? 'json' : 'body';
 
         return $postKey;
     }
